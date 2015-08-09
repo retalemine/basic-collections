@@ -1,4 +1,5 @@
 ####APT:
+* sudo add-apt-repository ppa:user/ppa-name              __Personal Package Archive__
 * sudo apt-get update
 * sudo apt-get upgrade
 * apt-cache search <pkg>
@@ -36,6 +37,10 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid,d
 * eject
   * eject -t
   * eject -T
+* sudo fdisk -l /dev/sda
+* dd if=debian-live-7.8.0-amd64-gnome-desktop.iso of=/dev/sdx bs=4M; sync                __unmount the device /dev/sdx and then proceed__
+* dd count=1 bs=512 if=/dev/zero of=/dev/sdx && sync       __restore USB__
+* lsblk   __list all drive and partitions in tree format__
 
 ####SYSTEM DISPLAY:
 * sudo service lightdm restart
@@ -105,3 +110,14 @@ Categories=Development;IDE;
 * ctrl+r - redo
 
 * dmesg |more
+
+####Create a new partition table (e.g. "msdos") and filesystem (e.g. EXT4, FAT32) using gparted, or from a terminal:
+* For EXT2/3/4 (adjust accordingly), it would be:
+  # cfdisk /dev/sdx
+  # mkfs.ext4 /dev/sdx1
+  # e2label /dev/sdx1 USB_STICK
+
+* For FAT32, install the dosfstools package and run:
+  # cfdisk /dev/sdx
+  # mkfs.vfat -F32 /dev/sdx1
+  # dosfslabel /dev/sdx1 USB_STICK

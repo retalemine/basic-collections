@@ -22,6 +22,7 @@
 * Gitg
 * Giggle
 * Apache Maven
+* MongoDB
 
 ####Server:
 * Jetty
@@ -44,6 +45,7 @@
 * ClamTK
 * ntopng
 * p7zip
+* hplip
 
 ####Editor:
 * Vim
