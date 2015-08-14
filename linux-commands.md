@@ -111,13 +111,14 @@ Categories=Development;IDE;
 
 * dmesg |more
 
-####Create a new partition table (e.g. "msdos") and filesystem (e.g. EXT4, FAT32) using gparted, or from a terminal:
+####Partitioning:
+* Create a new partition table (e.g. "msdos") and filesystem (e.g. EXT4, FAT32) using gparted, or from a terminal:
 * For EXT2/3/4 (adjust accordingly), it would be:
-  # cfdisk /dev/sdx
-  # mkfs.ext4 /dev/sdx1
-  # e2label /dev/sdx1 USB_STICK
+  * cfdisk /dev/sdx
+  * mkfs.ext4 /dev/sdx1
+  * e2label /dev/sdx1 USB_STICK
 
 * For FAT32, install the dosfstools package and run:
-  # cfdisk /dev/sdx
-  # mkfs.vfat -F32 /dev/sdx1
-  # dosfslabel /dev/sdx1 USB_STICK
+  * cfdisk /dev/sdx
+  * mkfs.vfat -F32 /dev/sdx1
+  * dosfslabel /dev/sdx1 USB_STICK
