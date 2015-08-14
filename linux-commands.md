@@ -19,6 +19,10 @@
 UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid,dev,noexec,auto,async 0 2
 ```
 * mount -t ext4 -o rw,suid,dev,noexec,auto,async /dev/sdb7 /media/<user>/ext-songs
+* umount /dev/sdb7
+* fsck __check filesystem__
+* /etc/fstab
+* /etc/mtab
 
 ####SYSTEM:
 * uname -a
