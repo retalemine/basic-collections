@@ -4,25 +4,48 @@
 * sudo apt-get upgrade
 * apt-cache search <pkg>
 * apt-cache show <pkg>
+* apt-cache showpkg <pkg>
 * apt-cache policy <pkg>
+* apt-cache madison <pkg>
 * sudo apt-get install <pkg>=<version>
-* dpkg -l <pkg>
+* dpkg -l <pkg>        __list installed packages__
+* dpkg -s <pkg>        __information on package__ 
+* sudo dpkg -i <pkg>   __install__
+* cat /var/log/dpkg.log | grep "\ install\ "
 
-####CHOWN:
+####FILE SYSTEM:
+* groups
+* cut -d: -f1 /etc/group
+* sudo usermod -a -G group_name user_name      __add an user to group__
+* sudo chgrp wireshark /usr/bin/dumpcap
+* sudo chmod o-rx /usr/bin/dumpcap or chmod 750 /usr/bin/dumpcap
+* sudo setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap
+* sudo getcap /usr/bin/dumpcap
 * sudo chown -R [owner]:[group] <dir>
+* grep -rnw '/path/' -e "pattern"      __ -r recursive, -n line number, -w whole word, -l file name__
+* grep --include=\*.{c,h} -rnw '/path/to/somewhere/' -e "pattern"
+* grep --exclude=*.o -rnw '/path/to/somewhere/' -e "pattern"
+* grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e "pattern"
+* find dir/ -type f -exec grep -H 'string' {} +
+* du -sh   __b/k/m/g/t/p__
 
 ####MANAGE DISK:
 * sudo fdisk -l
 * sudo blkid __shows disk partitions by UUID__
-* fstab entry: 
+* fstab entry:   __wiki.debian.org/fstab__
 ```
 UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid,dev,noexec,auto,async 0 2
+/dev/sdb5 /media/<user>/eData ext4 rw,nosuid,nodev,relatime,data=ordered 0 0
 ```
 * mount -t ext4 -o rw,suid,dev,noexec,auto,async /dev/sdb7 /media/<user>/ext-songs
+* mount -t ext4 -o ro,nosuid,nodev,noexec,auto,async /dev/sdb5 /media/<user>/ext-data
 * umount /dev/sdb7
 * fsck __check filesystem__
 * /etc/fstab
 * /etc/mtab
+
+####NETWORK:
+* ifconfig -a
 
 ####SYSTEM:
 * uname -a
@@ -45,6 +68,7 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid,d
 * dd if=debian-live-7.8.0-amd64-gnome-desktop.iso of=/dev/sdx bs=4M; sync                __unmount the device /dev/sdx and then proceed__
 * dd count=1 bs=512 if=/dev/zero of=/dev/sdx && sync       __restore USB__
 * lsblk   __list all drive and partitions in tree format__
+* printenv
 
 ####SYSTEM DISPLAY:
 * sudo service lightdm restart
@@ -114,6 +138,7 @@ Categories=Development;IDE;
 * ctrl+r - redo
 
 * dmesg |more
+* tee
 
 ####Partitioning:
 * Create a new partition table (e.g. "msdos") and filesystem (e.g. EXT4, FAT32) using gparted, or from a terminal:

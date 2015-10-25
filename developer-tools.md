@@ -21,4 +21,21 @@
   * export MAVEN_OPTS="-Xms256m -Xmx512m"
 
 ####GIT:
-* git clone --depth 1 [git-url] 
+* git clone --depth 1 [git-url]
+
+####Debian manipulation:
+```
+mkdir deb$$
+cp <pkg>.deb deb$$
+cd deb$$
+dpkg-deb -x <pkg>.deb deb
+cd deb
+dpkg-deb -e ../<pkg>.deb
+nano DEBIAN/control
+replace the old dependecy to newer version 
+or 
+remove the dependecy and add the so file in appropriate folder
+cp /usr/share/..libxx.so.xx deb/opt/...
+cd ..
+sudo dpkg-deb -b debian-installer
+```
