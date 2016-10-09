@@ -9,6 +9,9 @@
   * export PATH
   * sudo update-alternatives --install "/usr/bin/[java|javac|javaws]" "[java|javac|javaws]" "/usr/local/java/jdk1.8.0_20/bin/[java|javac|javaws]" 1
   * sudo update-alternatives --set [java|javac|javaws] /usr/local/java/jdk1.8.0_20/bin/[java|javac|javaws]
+  * update-alternatives --display javac
+  * update-alternatives --list javac
+  * update-alternatives --config javac
 
 ####IDE:
 * Eclipse 
@@ -39,3 +42,31 @@ cp /usr/share/..libxx.so.xx deb/opt/...
 cd ..
 sudo dpkg-deb -b debian-installer
 ```
+
+####Setting Env Variables or Aliases
+* ~/.profile
+* ~/.bash_aliases
+* LD_LIBRARY_PATH
+  * sudo gedit /etc/ld.so.conf.d/randomLibs.conf
+    * /home/linux/myLocalLibs
+* printenv, ldconfig
+
+####Arch
+* For 32-bit Intel/AMD (x86) - i386 (i386, i686)
+* For 64-bit Intel/AMD (x86_64) - amd64
+* i386/AMD64/ARMv6/ARMv7
+
+####Adding Debian repository link and public key for apt-secure
+* Add to /etc/apt/sources.list	_note the distribution name_
+```
+deb http://download.virtualbox.org/virtualbox/debian vivid contrib
+```
+* Add the downloaded public key
+```
+sudo apt-key add oracle_vbox.asc
+```
+```
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O - | sudo apt-key add -
+```
+* sudo apt-get update
+* sudo apt-get install virtualbox-5.0
