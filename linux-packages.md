@@ -1,6 +1,7 @@
 ####Entertainment:
 * Vlc
 * ubuntu-restricted-extras
+  * gstreamer1.0-fluendo-mp3
 * sudo /usr/share/doc/libdvdread4/install-css.sh
 * gnash
 * MusicBrainz Picard   __ppa:musicbrainz-developers/stable__
@@ -16,25 +17,34 @@ remove tags other than Tags: title;album;composer;albumartist;artist;genre;track
 remove comments
 remove lyricist
 remove unsyncedlyrics
-export artwork
+export cover artwork
 remove __image
-Clean up - title, album, composer, albumartist,   artist, genre, __filename
+Clean up - title, album, composer, albumartist,   artist, genre, __filename [., !(]
 Standard Conversion
 Fill empty
 Fill Up
 ```
 * SMPlayer
+* Darktable
+* Krita
+* fre:ac
+* quodlibet __sudo add-apt-repository ppa:lazka/ppa__
+* musescore
+* soundconverter
+* plex
 
 ####Video Editor:
 * Lightworks
 * PiTiVi
 * HandBrake
+* pinta
 
 ####Management:
 * Keepassx
 * Bleachbit
 * gnome-contacts
 * fslint, fdupes, dupeguru (PE, ME)
+* wxBanker
 
 ####Development:
 * Git                  __ppa:git-core/ppa__
@@ -42,6 +52,7 @@ Fill Up
 * Meld
 * Diffuse
 * Eclipse
+* Bluefish
 * Brackets
   * libgcrypt11 dependency issue
   * Beautify - Format JavaScript, HTML, and CSS files.
@@ -64,8 +75,22 @@ Fill Up
 * npm - systemjs
 * npm - typescript
 * npm - grunt
+* npm - json2csv
 * Dart SDK            __add to PATH /usr/lib/dart/bin/ to access dart tools; use ~/.profile__
 * jq - a lightweight and flexible command-line JSON processor.
+* VisualStudioCode
+* CheckInstall
+* Graylog
+* mycollab - community
+* json-to-csv
+  * GO   https://github.com/jehiah/json2csv
+  * NPM  https://github.com/zemirco/json2csv
+  * PY   https://github.com/wireservice/csvkit
+* json
+  * C    https://github.com/stedolan/jq
+  * NPM  https://github.com/trentm/json
+* remmina
+* glabels
 
 ####Server:
 * Jetty
@@ -93,10 +118,12 @@ Fill Up
 * Chromium browser
  * chromium-codecs-ffmpeg - Free ffmpeg codecs for the Chromium Browser
  * chromium-codecs-ffmpeg-extra - Extra ffmpeg codecs for the Chromium Browser
+ * pepper flash player plugin
  * purge + Delete /etc/chromium-browser:/usr/lib/chromium-browser/:~/.cache/chromium:~/.config/chromium:/usr/share/chromium-browser
  * How to get latest Chromium?
    * sudo add-apt-repository ppa:canonical-chromium-builds/stage
  * Disable hardware acceleration
+ * link grabber, adblock plus
 * Chrome, Vivaldi, Brave, Midori, Qupzilla
 * flashplugin-installer
 * Empathy (empathy-skype) | Ekiga | Skype
@@ -105,6 +132,8 @@ Fill Up
   * sudo cp /usr/share/ca-certificates/mozilla/AddTrust_External_Root.crt /opt/Citrix/ICAClient/keystore/cacerts/
 * Samba
 * Webex
+* brave - wget https://laptop-updates.brave.com/latest/linux64 -O- | tar xj
+* snap - sudo systemctl start --now snapd.socket
 
 ####System:
 * Intel Linux Graphics(remember to add key signatures)
@@ -116,6 +145,7 @@ Fill Up
   * Setup Guest OS -> run VBoxGuestAdditions.iso
   * grep 'vboxusers' /etc/group
     * sudo usermod -G vboxusers -a $USER
+  * cat /proc/cpuinfo |grep -E "vmx|svm"
 * HPLIP
 * ClamAV
 * ClamTK
@@ -124,6 +154,12 @@ Fill Up
 * hplip
 * gdebi     __debian installer__
 * dpkg-deb  __manipulating .deb files__
+* CheckInstall
+* auto-apt
+  * ./configure \ auto-apt run ./configure \ sudo make install
+  * auto-apt run ./configure
+  * make
+  * sudo checkinstall
 * Mono      __makes CLR .exe applications run__
 * Wine      __makes Win32 .exe applications run__
 * tree
@@ -136,6 +172,7 @@ Fill Up
 * Monitorix
 * python3-pip
 * virtualenv
+  * virtualenv v-env
   * source v-env/bin/activate
   * deactivate
 * csvkit
@@ -146,18 +183,37 @@ Fill Up
   * csvjoin -c Symbol,Equities --outer output/club.csv output/table.csv > output/output.csv
   * csvcut -c column\ 1,column2\(yrs\) output.csv > reorder.csv
   * join -1 2 -2 2 --check-order -t , -i club.csv club.csv
+* Monit
+* Conky
+* mkusb
+* syslinux-utils - isohybrid
 
 ####Editor:
 * Vim
 * Retext
 * Remarkable
+* Abricotine
+* gitbook
+* Notes-up
+* caret
+* ghostwriter
 * Atom
   * atom-beautify
   * emmet
   * linter
   * atom-typescript
+* Visual Code
+* Bracket
+* SublimeText
+* lighttable
 * tesseract-ocr
 * ocrfeeder
+* GnuCash
+* Gnome - Sticky, tomboy, tasque, evolution
+* xournal
+* calligra
+* PdfMod
+* Planner
 
 ####Learning:
 * Artha

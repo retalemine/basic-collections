@@ -45,6 +45,12 @@ sudo dpkg-deb -b debian-installer
 
 ####Setting Env Variables or Aliases
 * ~/.profile
+```
+# set PATH so it includes maven bin if it exists
+if [ -d "/opt/programfiles/apache-maven-3.3.9/bin" ] ; then
+    PATH="/opt/programfiles/apache-maven-3.3.9/bin:$PATH"
+fi
+```
 * ~/.bash_aliases
 * LD_LIBRARY_PATH
   * sudo gedit /etc/ld.so.conf.d/randomLibs.conf

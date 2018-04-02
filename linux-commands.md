@@ -3,7 +3,9 @@
 * sudo add-apt-repository --remove ppa:user/ppa-name
 * sudo apt-get update
 * sudo apt-get upgrade
+* sudo apt-get remove <pkg>
 * sudo apt-get purge <pkg>
+* sudo apt-get autoremove
 * apt-cache search <pkg>
 * apt-cache show <pkg>
 * apt-cache showpkg <pkg>
@@ -20,6 +22,10 @@
   * grep "not found" $HOME/check.txt | sort | uniq
   * apt-file search libXmu.so.6
   * sudo apt-get install -y libxmu6:i386
+    * libjawt.so, libgcj16-awt:i386, libgtk2.0-0:i386
+    * libpango-1.0-0:i386, libpangoft2-1.0-0:i386, libpangox-1.0-0:i386, libpangoxft-1.0-0:i386, libxft2:i386, libxmu6:i386, libxtst6:i386 __webex__
+  * sudo nspluginwrapper -i /usr/lib/jvm/ia32-java-6-sun/jre/lib/i386/libnpjp2.so
+  * ln -sf <<dir>>/lib/i386/libnpjp2.so ~/.mozilla/plugins/
 
 ####FILE SYSTEM:
 * groups
@@ -27,6 +33,7 @@
 * sudo usermod -a -G group_name user_name      __add an user to group__
 * sudo chgrp wireshark /usr/bin/dumpcap
 * sudo chmod o-rx /usr/bin/dumpcap or chmod 750 /usr/bin/dumpcap
+* sudo chmod [ugo][+-][rwx] <file>
 * sudo setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap
 * sudo getcap /usr/bin/dumpcap
 * sudo chown -R [owner]:[group] <dir>
@@ -39,6 +46,8 @@
 * find . -type f -iname '*.ini' -exec cp --parent \{\} /<path>/ \;
 * find . -type f -iname '*.ini' -print -delete
 * find . -type d -empty -exec rmdir {} \;
+* find . -name *.png -type f -print | xargs tar -cvzf images.tar.gz
+* ls /etc/*.conf | xargs -i cp {} /home/likegeeks/Desktop/out
 * cp -vur * /destination
 * du -sh   __b/k/m/g/t/p__
 * sha1sum file.ext > file.sha1
@@ -52,6 +61,7 @@
 
 ####MANAGE DISK:
 * sudo fdisk -l
+* sudo hdparm -i /dev/sda | grep Model
 * sudo parted -l
 * sudo gdisk -l /dev/sda
 * sudo blkid __shows disk partitions by UUID__
@@ -62,8 +72,15 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid, 
 ```
 * mount -t ext4 -o rw,suid,  dev,  noexec,auto,async /dev/sdb7 /media/<user>/ext-songs
 * mount -t ext4 -o ro,nosuid,nodev,noexec,auto,async /dev/sdb5 /media/<user>/ext-data
+* sudo apt-get install mkusb mkusb-nox usb-pack-efi
+* sudo mount -o loop /media/user/usb/casper-rw /mnt/livedrive
 * umount /dev/sdb7
+* mount | column -t
 * fsck __check filesystem__
+* sudo fsck -t ext4 -y -f -c /dev/sdb1    __answer y; force check;__
+* sudo fsck -l bad-blocks /dev/sdb1       __?__
+* sudo e2fsck -l badblocks.log /dev/sda1
+* sudo badblocks -sv /dev/sdb1 __-w destructive__
 * /etc/fstab
 * /etc/mtab
 
@@ -72,6 +89,15 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid, 
 * curl -L https://parsehub.com/download/linux | tar -xzf - -C /tmp && \
   * sudo mv /tmp/parsehub /opt/ && \
   * sudo ln -s /opt/parsehub/parsehub /usr/local/bin/
+* ethtool eth0
+* ethtool -i ethX
+* netstat -i
+* ifconfig -a
+* ifconfig up eth0
+* ip link show
+* ip addr 
+* cat /sys/class/net/enp4s0/carrier
+* cat /sys/class/net/enp4s0/operstate
 
 ####SYSTEM:
 * uname -a
@@ -80,11 +106,15 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid, 
 * lspci
   * lspci -vnn
   * lspci -vvx
+  * lspci -[v|k]
+  * lspci -v -s 00:02.0
+  * lspci | grep -i --color 'vga|3d|2d' | less
 * sudo lshw
   * sudo lshw -c video
 * lsmod
 * dmesg
   * dmesg | grep -i 'Graphic\|video\|VGA\|error\|fail'
+* cat /sys/kernel/debug/vgaswitcheroo/switch   __List GPU providers__
 * modinfo
   * modinfo i915
 * wodim --devices
@@ -94,6 +124,18 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid, 
 * sudo fdisk -l /dev/sda
 * dd if=debian-live-7.8.0-amd64-gnome-desktop.iso of=/dev/sdx bs=4M; sync     __unmount /dev/sdx and then proceed; Also check content of /dev/sdx__
 * dd count=1 bs=512 if=/dev/zero of=/dev/sdx && sync       __restore USB__
+* dd if=/dev/urandom of=/dev/null status=progress
+* sudo dd if=/dev/foo bs=4M | pv -s 20G | sudo dd of=/dev/baz bs=4M
+* pv /home/user/bigfile.iso | md5sum
+* sudo kill -SIGUSR1 $(pidof dd)
+* lsusb -v
+  * lsusb -s 001:006 -v
+* dc3dd if=/dev/sda of=/dev/sdb
+  * sudo ddrescue -v /dev/sda /dev/sdb
+* dd if=infile | pv > outfile
+  * pv infile > outfile
+  * sudo pv /dev/sda1 > /home/user/sda1.ext4.img
+* testdisk - Partition scanner and disk recovery tool, and PhotoRec file recovery tool
 * lsblk   __list all drive and partitions in tree format__
 * printenv
 * update-manager         _alt + F2_
@@ -114,6 +156,7 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid, 
 
 * xrandr
 * xrandr --output VGA1 --mode 1024x768 --rate 60
+* xrandr --listproviders
 
 * unity-tweak-tool --reset-unity
 
@@ -148,6 +191,20 @@ Comment=Integrated Development Environment
 NoDisplay=false
 Categories=Development;IDE;
 ```
+
+```
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PyCharm Community Edition
+Icon=/opt/programfiles/pycharm-community-2017.1.3/bin/pycharm.png
+Exec="/opt/programfiles/pycharm-community-2017.1.3/bin/pycharm.sh" %f
+Comment=The Drive to Develop
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-pycharm-ce
+```
+
 ####CLAMAV:
 * sudo freshclam
 * /etc/clamav/freshclam.conf
@@ -188,6 +245,7 @@ Categories=Development;IDE;
 
 ####Boot Space Clean Up:
 * df -h
+* watch df -h
 * du -sk * | sort -n
 * apt-get autoremove
 * apt-get clean				_/var/cache/apt/archives/ and /var/cache/apt/archives/partial/_
@@ -277,3 +335,288 @@ NetBIOS over TCP disabled -- no workgroup available
 * gpg --keyserver pool.sks-keyservers.net --recv-keys 0x4E2C6E8793298290
 * gpg --fingerprint 0x4E2C6E8793298290
 * gpg --verify ~/Downloads/tor-browser-linux64-6.0.5_en-US.tar.xz{.asc,}
+
+####Detecting available microcode update: 
+* sudo update-pciids			_grab the current version of the pci.ids file from the Internet_
+
+1) sudo apt-get install iucode-tool (skip extra package intel-microcode; would say intel-microcode: microcode will be updated at next boot)
+2) iucode_tool -K/tmp/microdir/ ~/Downloads/microcode.dat
+3) modprobe cpuid && iucode_tool -tb -lS /tmp/microdir
+	* iucode_tool: could not open cpuid devices, cannot scan system processor signatures ??
+	* Should the signature scan fail on all online processors, the program  will  print  a  warning  to  the  user  and  continue  as  if --scan-system had not been specified.  This is a fail‐safe condition when iucode_tool is used to install microcode updates for the next boot.
+
+####Processor Update:
+* https://wiki.debian.org/Microcode
+* update-intel-microcode - download current Intel processor microcode
+* lsmod | grep microcode
+* dmesg | grep microcode			_Verifying that microcode got updated on boot_
+[    0.000000] CPU0 microcode updated early to revision 0xa0b, date = 2010-09-28
+[    0.008000] CPU1 microcode updated early to revision 0xa0b, date = 2010-09-28
+[    0.475475] microcode: CPU0 sig=0x1067a, pf=0x1, revision=0xa0b
+[    0.475477] microcode: CPU1 sig=0x1067a, pf=0x1, revision=0xa0b
+[    0.475577] microcode: Microcode Update Driver: v2.00 <tigran@aivazian.fsnet.co.uk>, Peter Oruba
+* journalctl -b | grep microcode
+* journalctl -b -1 
+Dec 31 21:29:27 subhu-desktop kernel: CPU0 microcode updated early to revision 0xa0b, date = 2010-09-28
+Dec 31 21:29:27 subhu-desktop kernel: CPU1 microcode updated early to revision 0xa0b, date = 2010-09-28
+Dec 31 21:29:27 subhu-desktop kernel: microcode: CPU0 sig=0x1067a, pf=0x1, revision=0xa0b
+Dec 31 21:29:27 subhu-desktop kernel: microcode: CPU1 sig=0x1067a, pf=0x1, revision=0xa0b
+Dec 31 21:29:27 subhu-desktop kernel: microcode: Microcode Update Driver: v2.00 <tigran@aivazian.fsnet.co.uk>, Peter Oruba
+
+####GPU benchmarking tools:
+* sudo apt-get install mesa-utils
+* glxgears -info
+  * DRI_PRIME=1 glxgears -info
+* sudo apt-get install glmark2
+* glmark2
+* GpuTest is a cross-platform (Windows, Linux and Max OS X) GPU stress test and OpenGL benchmark. 
+https://help.ubuntu.com/community/RadeonDriver
+https://help.ubuntu.com/community/BinaryDriverHowto/AMD
+http://unigine.com/products/benchmarks/heaven/
+
+!!!
+$ sudo update-pciids			_grab the current version of the pci.ids file from the Internet_
+
+$ inxi -M
+$ inxi -G
+
+$ sudo lshw
+$ sudo lshw -short
+$ sudo lshw -class display
+
+$ sudo dmidecode -t baseboard
+
+$ lscpu
+
+$ grep -i --color memory /var/log/Xorg.0.log
+$ sudo dmesg | grep drm
+
+$ hardinfo
+
+$ glxinfo | grep OpenGL	
+$ LIBGL_DEBUG=verbose glxinfo
+	Make sure your OpenGL renderer string does not say "software rasterizer" or "llvmpipe" because that would mean you have no 3D hardware acceleration
+
+* The "OpenGL renderer string" if points to MESA libraries means that 3d rendering is being handled entirely inside software. This is going to be slow and games would not work well.
+* To get clock speed information
+  * For ATI/AMD GPUs, aticonfig --odgc will fetch the clock rates, and aticonfig --odgt will fetch the temperature data.
+  * For NVIDIA GPUs, the nvclock program will fetch the same information.
+* If fglrx is installed and working well you should see an output similar to:
+$ fglrxinfo
+display: :0  screen: 0
+OpenGL vendor string: Advanced Micro Devices, Inc.
+OpenGL renderer string: ATI Radeon HD 4300/4500 Series       
+OpenGL version string: 3.3.11399 Compatibility Profile Context
+
+$ modinfo i915 				_check the detail of the video driver_
+
+$ dmesg | grep -i 'Graphic\|video\|VGA\|error\|fail\|drm\|radeon\|amd\|gpu|\mux'
+
+$ dpkg -l | grep 'nvidia\|AMD\|ATI'
+
+$ sensors
+
+$ xrandr --listproviders
+
+$ lsb_release -a
+~~~~~~~~~~~~~~~~~~~~~~~``
+$ sudo grep -i switcheroo /boot/config-*
+	/boot/config-4.1.0-1-amd64:CONFIG_VGA_SWITCHEROO=y
+	vga_switcheroo is the kernel mechanism that allows you to switch between GPUs if your machine has a hardware mux. And only works if you are using the opensource driver.
+$ sudo gedit /etc/default/grub => "modeset=1" kernel option, and/or the "nomodeset" option being absent for vga_switcheroo to work
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash radeon.modeset=1"
+$ sudo update-grub
+$ sudo ls -l /sys/kernel/debug/vgaswitcheroo/switch	_To test if vga_switcheroo is enabled, look for the switch file_
+$ sudo cat /sys/kernel/debug/vgaswitcheroo/switch
+	Allows you to verify the current state of the hybrid graphics. Typically, there will be two lines of output - one should indicate "Pwr" and the other should indicate "Off".
+$ sudo su
+$ sudo echo ON > /sys/kernel/debug/vgaswitcheroo/switch
+	Turns on the GPU that is disconnected (not currently driving outputs), but does not switch outputs.
+$ sudo echo IGD > /sys/kernel/debug/vgaswitcheroo/switch
+	Connects integrated graphics with outputs.
+$ sudo echo DIS > /sys/kernel/debug/vgaswitcheroo/switch
+	Connects discrete graphics with outputs.
+$ sudo echo OFF > /sys/kernel/debug/vgaswitcheroo/switch
+	Turns off the graphics card that is currently disconnected.
+$ sudo echo DIGD > /sys/kernel/debug/vgaswitcheroo/switch
+	Queues a switch to integrated graphics to occur when the X server is next restarted.
+$ sudo echo DDIS > /sys/kernel/debug/vgaswitcheroo/switch
+	Queues a switch to discrete graphics to occur when the X server is next restarted.
+~~~~~~~~~~~~~~~~~~~~~~~``
+~~~~~~~~~~~~~~~~~~``
+$ amdconfig --uninstall				_Uninstall the driver you installed from the AMD/ATI website_
+$ /usr/share/ati/amd-uninstall.sh --force
+$ apt-get purge fglrx fglrx-updates fglrx-amdcccle fglrx-amdcccle-updates
+$ rm /usr/share/ati
+
+reconfigure:
+$ apt-get install --reinstall xserver-xorg-core libgl1-mesa-glx libgl1-mesa-dri
+$ dpkg-reconfigure xserver-xorg
+$ update-initramfs -u
+
+$ mv /etc/X11/xorg.conf /etc/X11/xorg.conf.bak			_remove any conf if it was created when you installed fglrx_
+
+$ apt-get remove vgaswitcheroo			_uninstall vga_switcheroo_
+!!!
+
+####ISO to IMG:
+* Delete all partitions, create a new one taking up all the space, set type to NTFS (7), and remember to set it bootable:
+  * cfdisk /dev/sdb   or   fdisk /dev/sdb (partition type 7, and bootable flag)
+* Create an NTFS filesystem:
+  * mkfs.ntfs -f /dev/sdb1
+* Write Windows 7 MBR on the USB stick (also works for windows 8), multiple options here:
+  * ms-sys -7 /dev/sdb
+  or (e.g. on newer Ubuntu installs) sudo lilo -M  /dev/sdb mbr (info)
+  or (if syslinux is installed) sudo dd if=/usr/lib/syslinux/bios/mbr.bin of=/dev/sdb
+* Mount ISO and USB media:
+  * mount -o loop win7.iso /mnt/iso
+  * mount /dev/sdb1 /mnt/usb
+* Mount & Execute:
+  * mkdir -p /tmp/cdrom
+  * mount -o loop,exec /path/to/systemrescuecd-x86-x.y.z.iso /tmp/cdrom
+  * cd /tmp/cdrom
+  * bash ./usb_inst.sh
+  * cd ~
+  * umount /tmp/cdrom
+* Copy over all files:
+  * cp -r /mnt/iso/* /mnt/usb/   ...or use the standard GUI file-browser of your system
+* Call sync to make sure all files are written.
+* dd if=/dev/sdb of=/win7.img
+* reverse if/of next time you want to put the Windows 7 installer onto USB.
+
+
+sudo ufw status
+sudo setterm --dump 1 --file screen.dump
+
+sudo -i ethtool enp3s1
+sudo -i ethtool -S enp3s1
+ethtool eth0 | grep Wake-on
+
+ip addr
+ip link
+ip link show up
+netstat -nr
+arp -e
+
+ifconfig up enp3s1
+
+sudo dhclient -v enp3s1 
+
+ping www.google.com
+whois yahoo.com
+traceroute -I 144.232.20.158
+tracert 80.40.118.227
+mtr 192.168.25.26
+tcpdump -i wlan0 -t host 192.168.1.102 and tcp port 22
+tcpdump -i eth1 -w /tmp/packets.dump tcp port 22
+tshark -i eth0 tcp port 80 and host 192.168.1.100
+nslookup www.linuxhomenetworking.com
+
+sudo lsof -i
+netstat -nr
+netstat -g
+netstat -aop | grep "18489"
+netstat -nutcpawl | grep EST
+
+cat /sys/class/net/enp3s1/operstate
+cat /sys/class/net/enp3s1/carrier
+cat /etc/network/interfaces
+cat /etc/hosts
+cat /etc/resolv.conf
+
+mount /media/cdrom -o unhide
+umount /media/cdrom
+eject cdrom
+
+####System Info:
+sudo apt-get install lm-sensors
+mkdir -p ~/Desktop/systeminfo
+dmesg > ~/Desktop/systeminfo/init-dmesg.txt
+dpkg -l > ~/Desktop/systeminfo/dpkg-list.txt
+sudo fdisk -l > ~/Desktop/systeminfo/fdisk.txt
+lsblk > ~/Desktop/systeminfo/lsblk.txt
+cp /etc/fstab ~/Desktop/systeminfo/fstab.txt
+cp /etc/mtab ~/Desktop/systeminfo/mtab.txt
+uname -a > ~/Desktop/systeminfo/uname.txt
+lsb_release -a > ~/Desktop/systeminfo/lsb.txt
+cat /proc/cmdline > ~/Desktop/systeminfo/cmdline.txt
+cat /etc/default/grub > ~/Desktop/systeminfo/grub.txt
+printenv > ~/Desktop/systeminfo/env.txt
+ifconfig -a > ~/Desktop/systeminfo/ifconfig.txt
+sudo dmidecode > ~/Desktop/systeminfo/dmidecode.txt
+sudo lscpu > ~/Desktop/systeminfo/lscpu.txt
+sudo lspci -vvnn > ~/Desktop/systeminfo/lspci.txt
+sudo lshw > ~/Desktop/systeminfo/lshw.txt
+lsmod > ~/Desktop/systeminfo/lsmod.txt
+wodim --devices > ~/Desktop/systeminfo/wodim.txt
+sensors > ~/Desktop/systeminfo/sensors.txt
+inxi -v7 > ~/Desktop/systeminfo/inxi.txt
+sudo cat /sys/kernel/debug/vgaswitcheroo/switch > ~/Desktop/systeminfo/vgaswitch.txt
+xrandr > ~/Desktop/systeminfo/xrandr.txt
+xrandr --listproviders >> ~/Desktop/systeminfo/xrandr.txt
+glxinfo | grep OpenGL > ~/Desktop/systeminfo/openGL.txt
+xinput > ~/Desktop/systeminfo/xinput.txt
+cat /proc/interrupts > ~/Desktop/systeminfo/interrupts.txt
+cat /proc/acpi/wakeup > ~/Desktop/systeminfo/wakeup.txt
+pstree > ~/Desktop/systeminfo/pstree.txt
+
+
+
+ACPI - Advanced Configuration and Power Interface
+APM - Application Performance Monitoring
+acpi - displays information on ACPI devices
+acpitool - command line ACPI client
+apmd - Utilities for Advanced Power Management (APM)
+acpidump - go to the tools/power/acpi/ directory of your kernel source code and run “make”.
+impitool <relevant connection options> sel list (?)
+systemd
+dmesg -k
+journalctl | less
+ACPI_NOTIFY_DEVICE_WAKE
+$ pstree
+$ last 100
+$ last -x reboot 
+$ who
+$ who -b 
+
+curl -L https://parsehub.com/static/client/parsehub.tar.gz | tar -xzf - -C /tmp && \
+sudo mv /tmp/parsehub /opt/ && \
+sudo ln -s /opt/parsehub/parsehub /usr/local/bin/
+
+File Content Handling:
+* Merge
+  * join -1 1 -2 1 --header --nocheck-order -t , -i file1 file2
+  * join -1 1 -2 1 --check-order -t , -i file1 file2
+  * join -a 1 -a 1 -e " " file1 file2
+  * join -v
+  * join -t , --nocheck-order -j 1 ms.txt ru.txt > /tmp/msru-1.txt \ cat /tmp/msru-1.txt | wc -l 
+  * join -t , --nocheck-order -a 1 ms.txt ru.txt > /tmp/msru-2.txt \ cat /tmp/msru-2.txt | wc -l
+  * join -t , --nocheck-order -a 2 ms.txt ru.txt > /tmp/msru-2-2.txt \ cat /tmp/msru-2-2.txt | wc -l
+  * join -t , --nocheck-order -v 1 ms.txt ru.txt > /tmp/msru-3.txt \ cat /tmp/msru-3.txt | wc -l
+  * join -t , --nocheck-order -v 2 ms.txt ru.txt > /tmp/msru-3-2.txt \ cat /tmp/msru-3-2.txt | wc -l
+* Horizontal
+  * paste -d ',' file1 file2 file3 ...
+* Vertical
+  * dd if=file2 of=file2 bs=1M count=10 oflag=append conv=notrunc
+  * cat input1.csv input2.csv input3.csv > combined.csv
+  * cat file1 file2 file3 | tee -a file4 > /dev/null
+  * cat input1.csv > combined.csv \ cat input2.csv | sed "1 d" >> combined.csv \ cat input3.csv | sed "1 d" >> combined.csv
+* Selection
+  * dd if=file1 of=file2 bs=1M count=99 skip=1
+  * cut -d , -f 2,4-6 input.csv
+  * (head -n 1 run_results-fundsnapshot.csv && tail -n +2 run_results-fundsnapshot.csv | sort)
+  * head -n 1 run_results-fundsnapshot.csv
+* Conversion
+  * dd if=file1 of=bigfile2 seek=$(stat -c %s bigfile2)
+  * dd if=file1 of=file2 conv=ucase
+  * dd if=textfile.ebcdic of=textfile.ascii conv=ascii
+  * cat file.in | tr a-z A-Z > file.out
+  * cat file.in | tr ':[space]:' '\t' > file.out
+* Creation
+  * dd if=/dev/zero of=out.txt bs=1M count=10
+
+####OS Migration:
+* Puddletag
+./.config/puddletag
+./.local/share/puddletag
+
