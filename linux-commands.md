@@ -2,6 +2,9 @@
 * sudo add-apt-repository ppa:user/ppa-name              __Personal Package Archive__
 * sudo add-apt-repository --remove ppa:user/ppa-name
 * sudo apt-get update
+* sudo apt update
+* apt list --upgradable
+* apt-key list
 * sudo apt-get upgrade
 * sudo apt-get remove <pkg>
 * sudo apt-get purge <pkg>
@@ -12,6 +15,7 @@
 * apt-cache policy <pkg>
 * apt-cache madison <pkg>
 * sudo apt-get install <pkg>=<version>
+* sudo apt-get install --reinstall <pkg>
 * dpkg -l <pkg>        __list installed packages__
 * dpkg -s <pkg>        __information on package__ 
 * sudo dpkg -i <pkg.deb>   __install__
@@ -30,6 +34,8 @@
 ####FILE SYSTEM:
 * groups
 * cut -d: -f1 /etc/group
+* grep -i --color 'docker' /etc/group
+* members group-name
 * sudo usermod -a -G group_name user_name      __add an user to group__
 * sudo chgrp wireshark /usr/bin/dumpcap
 * sudo chmod o-rx /usr/bin/dumpcap or chmod 750 /usr/bin/dumpcap
@@ -47,6 +53,8 @@
 * find . -type f -iname '*.ini' -print -delete
 * find . -type d -empty -exec rmdir {} \;
 * find . -name *.png -type f -print | xargs tar -cvzf images.tar.gz
+* find . -type f ! -path '*/node_modules/*'
+* find . -type f ! -path '*/.git/*'
 * ls /etc/*.conf | xargs -i cp {} /home/likegeeks/Desktop/out
 * cp -vur * /destination
 * du -sh   __b/k/m/g/t/p__
@@ -58,6 +66,8 @@
 * file limited.csv
   * file -bi limited.csv
 * hexdump -n 128 -C limited.csv
+* free -h
+* top -b -n 1 | grep 'lightdm'
 
 ####MANAGE DISK:
 * sudo fdisk -l
@@ -122,7 +132,7 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid, 
   * eject -t
   * eject -T
 * sudo fdisk -l /dev/sda
-* dd if=debian-live-7.8.0-amd64-gnome-desktop.iso of=/dev/sdx bs=4M; sync     __unmount /dev/sdx and then proceed; Also check content of /dev/sdx__
+* dd if=debian-live-7.8.0-amd64-gnome-desktop.iso of=/dev/sdx bs=4M status=progress; sync     __unmount /dev/sdx and then proceed; Also check content of /dev/sdx__
 * dd count=1 bs=512 if=/dev/zero of=/dev/sdx && sync       __restore USB__
 * dd if=/dev/urandom of=/dev/null status=progress
 * sudo dd if=/dev/foo bs=4M | pv -s 20G | sudo dd of=/dev/baz bs=4M
@@ -139,9 +149,12 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid, 
 * lsblk   __list all drive and partitions in tree format__
 * printenv
 * update-manager         _alt + F2_
+* systemd-analyze blame
 
 ####SYSTEM DISPLAY:
 * sudo service lightdm restart
+* systemctl status lightdm.service
+* sudo dpkg-reconfigure lightdm
 * env | grep GDMSESSION
 * env | grep DESKTOP_SESSION=
 * env | grep XDG_CURRENT_DESKTOP

@@ -38,6 +38,22 @@ Fill Up
 * PiTiVi
 * HandBrake
 * pinta
+* tox
+####PhotoEditor:
+* * ImageMagick
+  * convert demo.pdf demo.jpg
+  * convert demo.pdf[2] demo.jpg  // 0 means the first page and then increment 1 for each page.
+  * convert -thumbnail x300 demo.pdf[2] demo.jpg // create a thumbnail image of height 300px
+  * convert -thumbnail x300 demo.pdf[2] -flatten demo.jpg // white background in the transparent areas.
+  * convert -density 200 -scale x800 demo.pdf[2] demo.jpg // Use a value of around 175 and the text should become clearer than before.
+  * convert -thumbnail x300 -delay 100 demo.pdf demo.gif
+  * convert demo.pdf[0] -scale x800 -quality 75  -flatten demo75.jpg // Higher quality image would have lesser compression and larger file size as a result.
+```
+/etc/ImageMagick-6/policy.xml
+<policy domain="coder" rights="read" pattern="PDF" />
+```
+* ghostscript
+* inkscape
 
 ####Management:
 * Keepassx
@@ -89,6 +105,8 @@ Fill Up
 * json
   * C    https://github.com/stedolan/jq
   * NPM  https://github.com/trentm/json
+* csv-to-json
+  * JS   https://github.com/Keyang/node-csvtojson
 * remmina
 * glabels
 
@@ -103,6 +121,7 @@ Fill Up
 * Uget
 * FlashGot
 * youtube-dl
+  * youtube-dl -x --audio-format mp3 --audio-quality 128k https://www.youtube.com/watch?v=xyz
 * Net Activity Viewer
 * WireShark
   * dumpcap -D
@@ -187,9 +206,15 @@ Fill Up
 * Conky
 * mkusb
 * syslinux-utils - isohybrid
+* screenFetch
+* Neofetch
+* Archey
 
 ####Editor:
 * Vim
+* Nano
+* kakoune
+* Light Table
 * Retext
 * Remarkable
 * Abricotine
@@ -214,6 +239,17 @@ Fill Up
 * calligra
 * PdfMod
 * Planner
+* Evince
+* Foxit
+* mupdf
+* Master PDF Editor
+  * https://code-industry.net/masterpdfeditor-help/digital_signatures/
+* poppler-utils - pdfsig [ pdfsig signed.pdf ]
+* pdftk /home/lori/Documents/secured.pdf input_pw password output /home/lori/Documents/unsecured.pdf
+* qpdf -password=1801xx -decrypt /mydata/documents/retalemine/job/cognizant/payslips/2018-01-Payslipp.pdf /mydata/documents/retalemine/job/cognizant/payslips/un.pdf
+* pdftops -upw password /home/lori/Documents/secured.pdf /home/lori/Documents/unsecured.pdf
+* ps2pdf /home/lori/Documents/unsecured.ps /home/lori/Documents/unsecured.pdf
+* evince /home/lori/Documents/secured.pdf
 
 ####Learning:
 * Artha
