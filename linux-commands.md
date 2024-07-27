@@ -31,6 +31,27 @@
   * sudo nspluginwrapper -i /usr/lib/jvm/ia32-java-6-sun/jre/lib/i386/libnpjp2.so
   * ln -sf <<dir>>/lib/i386/libnpjp2.so ~/.mozilla/plugins/
 
+####Pac:
+* pacman -S package_name1 package_name2 ...		__install a single package or list of packages__
+* pacman -S extra/package_name 					__Sometimes there are multiple versions of a package in different repositories, e.g. extra and testing__
+* pacman -Sg gnome								__list packages belong to the gnome group__
+* pacman -Syu 									__Upgrading packages__
+* pacman -Ss string1 string2 ...				__search__
+* pacman -Ss '^vim-'
+* pacman -Qs string1 string2 ...				__search already installed packages__
+* pacman -Si package_name 						__display extensive information __
+* pacman -Qi package_name 						__locally installed packages__
+* pactree package_name 							__list a dependency tree of a package__
+* pacman -Sc									__Cleaning the package cache @ /var/cache/pacman/pkg/__
+* pacman -Scc									__empty the cache folder fully__
+* pacman -Sw package_name	 					__Download a package without installing it__
+* pacman -Fy									__Sync the files database__
+* pacman -Fs pacman								__Search for a package containing a file__
+* pacman -Syy  									__To ensure you have list from primary mirror__
+* pacman -Syu  									__To download packages.__
+* pacman -Syyu 									__first refreshes using primary mirror and then updates__
+* pacman -U <package name>.pkg.tar 				__install specific package from tar file__
+
 ####FILE SYSTEM:
 * groups
 * cut -d: -f1 /etc/group
@@ -132,10 +153,19 @@ UUID=xyz0ad33-c529-481b-b3c4-abc90a449135 /media/<user>/ext-songs ext4 rw,suid, 
   * eject -t
   * eject -T
 * sudo fdisk -l /dev/sda
-* dd if=debian-live-7.8.0-amd64-gnome-desktop.iso of=/dev/sdx bs=4M status=progress; sync     __unmount /dev/sdx and then proceed; Also check content of /dev/sdx__
+* dd if=debian-live-7.8.0-amd64-gnome-desktop.iso of=/dev/sdx bs=4M status=progress && sync     __unmount /dev/sdx and then proceed; Also check content of /dev/sdx__
+* dd bs=4M if=MX-19.3_ahs_x64.iso of=/dev/sdc status=progress oflag=sync
 * dd count=1 bs=512 if=/dev/zero of=/dev/sdx && sync       __restore USB__
 * dd if=/dev/urandom of=/dev/null status=progress
 * sudo dd if=/dev/foo bs=4M | pv -s 20G | sudo dd of=/dev/baz bs=4M
+* sudo dd if=/dev/sdc conv=sync,noerror bs=64K  | gzip -c > /data/torrent/OS/en_windows_7_professional_with_sp1_x64_dvd_u_676939.img.gz
+* sudo dd if=/dev/sdc conv=sync,noerror bs=64K  of=/data/torrent/OS/en_windows_7_professional_with_sp1_x64_dvd_u_676939.img status=progress
+* gzip -k /data/torrent/OS/en_windows_7_professional_with_sp1_x64_dvd_u_676939.img
+* sudo dd if=/dev/sdx conv=sync,noerror bs=64K  of=/dev/sdb status=progress
+* sudo dd if=/dev/sdx conv=sync,noerror bs=128K | gzip -c | ssh vivek@server1.cyberciti.biz dd of=centos-core-7.gz
+* sudo dd if=/dev/sdx iflag=fullblock of=/path/to/new.iso status=progress
+* gunzip -c /mnt/external_disk/backup_image.img.gz | dd of=/dev/sdx
+* fdisk –l /data/torrent/OS/en_windows_7_professional_with_sp1_x64_dvd_u_676939.img
 * pv /home/user/bigfile.iso | md5sum
 * sudo kill -SIGUSR1 $(pidof dd)
 * lsusb -v
@@ -216,6 +246,10 @@ Comment=The Drive to Develop
 Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-pycharm-ce
+```
+
+```
+/home/subhu/.local/share/applications/
 ```
 
 ####CLAMAV:
@@ -326,6 +360,7 @@ NetBIOS over TCP disabled -- no workgroup available
 * youtube-dl -f 22 https://www.youtube.com/watch?v=Jn-GwAN2Ahk
 * youtube-dl --list-formats https://www.youtube.com/watch?v=Jn-GwAN2Ahk
 * youtube-dl https://www.youtube.com/playlist?list=PLSM7v62fgiGEA1S80Hra3BJDmD3oWKdJF
+* youtube-dl -x --audio-format mp3 --audio-quality 128k https://www.youtube.com/watch?v=xyz
 ```
 --verbose
 --print-traffic
@@ -548,10 +583,12 @@ dmesg > ~/Desktop/systeminfo/init-dmesg.txt
 dpkg -l > ~/Desktop/systeminfo/dpkg-list.txt
 sudo fdisk -l > ~/Desktop/systeminfo/fdisk.txt
 lsblk > ~/Desktop/systeminfo/lsblk.txt
-cp /etc/fstab ~/Desktop/systeminfo/fstab.txt
-cp /etc/mtab ~/Desktop/systeminfo/mtab.txt
+cat /etc/fstab > ~/Desktop/systeminfo/fstab.txt
+cat /etc/mtab > ~/Desktop/systeminfo/mtab.txt
 uname -a > ~/Desktop/systeminfo/uname.txt
 lsb_release -a > ~/Desktop/systeminfo/lsb.txt
+cat /etc/os-release >> ~/Desktop/systeminfo/lsb.txt
+cat /etc/issue >> ~/Desktop/systeminfo/lsb.txt
 cat /proc/cmdline > ~/Desktop/systeminfo/cmdline.txt
 cat /etc/default/grub > ~/Desktop/systeminfo/grub.txt
 printenv > ~/Desktop/systeminfo/env.txt
@@ -572,8 +609,7 @@ xinput > ~/Desktop/systeminfo/xinput.txt
 cat /proc/interrupts > ~/Desktop/systeminfo/interrupts.txt
 cat /proc/acpi/wakeup > ~/Desktop/systeminfo/wakeup.txt
 pstree > ~/Desktop/systeminfo/pstree.txt
-
-
+echo $PATH >  ~/Desktop/systeminfo/PATH.txt
 
 ACPI - Advanced Configuration and Power Interface
 APM - Application Performance Monitoring
@@ -633,3 +669,6 @@ File Content Handling:
 ./.config/puddletag
 ./.local/share/puddletag
 
+####LTS
+* sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+  * http://us.archive.ubuntu.com/ubuntu/ or http://security.ubuntu.com/ubuntu  to http://old-releases.ubuntu.com/ubuntu/

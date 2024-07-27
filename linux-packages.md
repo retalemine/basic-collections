@@ -54,6 +54,17 @@ Fill Up
 ```
 * ghostscript
 * inkscape
+* jpegoptim
+  * jpegoptim --size=250k tecmint.jpeg
+* trimage
+* convert
+  * convert -border 20 -bordercolor Bulldog.pdf-1.png out-Bulldog.pdf-1.png
+  * convert -density 300 document.pdf -quality 100 output_image.jpeg
+  * convert document.pdf output_image.png
+* pdftoppm
+  * pdftoppm input.pdf output -jpeg
+  * pdftoppm -jpeg -f 3 -l 5 input.pdf output __page 3 to 5 of input file converted to image__
+  
 
 ####Management:
 * Keepassx
@@ -100,7 +111,7 @@ Fill Up
 * mycollab - community
 * json-to-csv
   * GO   https://github.com/jehiah/json2csv
-  * NPM  https://github.com/zemirco/json2csv
+  * NPM  https://github.com/zemirco/json2csv https://github.com/juanjoDiaz/json2csv
   * PY   https://github.com/wireservice/csvkit
 * json
   * C    https://github.com/stedolan/jq
@@ -163,7 +174,7 @@ Fill Up
   * Check whether _dkms_ package is also installed
   * Setup Guest OS -> run VBoxGuestAdditions.iso
   * grep 'vboxusers' /etc/group
-    * sudo usermod -G vboxusers -a $USER
+    * sudo usermod -a -G vboxusers $USER
   * cat /proc/cpuinfo |grep -E "vmx|svm"
 * HPLIP
 * ClamAV
@@ -209,6 +220,7 @@ Fill Up
 * screenFetch
 * Neofetch
 * Archey
+* etcher
 
 ####Editor:
 * Vim
@@ -217,6 +229,7 @@ Fill Up
 * Light Table
 * Retext
 * Remarkable
+* Marktext
 * Abricotine
 * gitbook
 * Notes-up
@@ -230,6 +243,7 @@ Fill Up
 * Visual Code
 * Bracket
 * SublimeText
+  * markdownpreview
 * lighttable
 * tesseract-ocr
 * ocrfeeder
@@ -253,3 +267,13 @@ Fill Up
 
 ####Learning:
 * Artha
+
+####Security:
+* Snort
+* bitwarden
+* cisofy
+
+####Boot USB:
+* wintousblinux
+* woeusb
+  * woeusb-5.2.4.bash --device /media/subhu/Songs/software/os/windows/en_windows_7_professional_with_sp1_x64_dvd_u_676939.iso /dev/sdc

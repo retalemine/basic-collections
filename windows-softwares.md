@@ -5,3 +5,4 @@
 * vmt
 * Bluescreenview
 * DataSafeLocalBackup Basic
+* Belarc Advisor
